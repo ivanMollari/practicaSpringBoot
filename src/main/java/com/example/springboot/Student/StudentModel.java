@@ -1,11 +1,17 @@
 package com.example.springboot.Student;
 
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.Period;
 
+@Entity
 public class StudentModel {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name,email;
+    @Transient
     private Integer age;
     private LocalDate dob;
 
@@ -13,18 +19,16 @@ public class StudentModel {
 
     }
 
-    public StudentModel(Long id, String name, String email, Integer age, LocalDate dob) {
+    public StudentModel(Long id, String name, String email, LocalDate dob) {
         this.id = id;
         this.name = name;
         this.email = email;
-        this.age = age;
         this.dob = dob;
     }
 
-    public StudentModel(String name, String email, Integer age, LocalDate dob) {
+    public StudentModel(String name, String email, LocalDate dob) {
         this.name = name;
         this.email = email;
-        this.age = age;
         this.dob = dob;
     }
 
@@ -53,7 +57,7 @@ public class StudentModel {
     }
 
     public Integer getAge() {
-        return age;
+        return Period.between(this.dob,LocalDate.now()).getYears();
     }
 
     public void setAge(Integer age) {
